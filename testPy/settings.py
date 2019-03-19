@@ -25,7 +25,7 @@ SECRET_KEY = '%#^vacsvop0s!0rge_1w1avw59t^v2eo_-5ib$z5f9$vads%(e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['roadade.pythonanywhere.com.']
 
 
 # Application definition
