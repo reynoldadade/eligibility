@@ -1,0 +1,25 @@
+body {
+  background: #76b852;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(right, #B22222, #FF0000);
+  background: -moz-linear-gradient(right, #B22222, #FF0000);
+  background: -o-linear-gradient(right, #B22222, #FF0000);
+  background: linear-gradient(to left, #B22222, #FF0000);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page-header{
+  font-family:"Abril Fatface";
+  font-size: 50%;
+}
+
+#quote-box{
+  font-family: "Indie Flower", cursive;
+  font-size: 250%;
+}
+
+#quote-author{
+  float:right;
+}

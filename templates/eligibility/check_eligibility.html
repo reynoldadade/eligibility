@@ -1,0 +1,149 @@
+{% extends 'base_logged_in.html' %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block title %}Check Eligibility{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/check_eligibility.css' %}">
+  <link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+
+
+{% block content %}
+  <div id='container' style="margin-top:-10px;">
+    <form method="POST" action="{% url 'eligibility:check_eligibility' %}">
+      {%csrf_token%}
+      <div class='cell'>
+        <input type='search' placeholder='Employee ID' name='emp_id' id='emp_id' autofocus="autofocus" style="height:50px; width:300px;font-size:250%;"/>
+      </div>
+      <div class='cell'>
+        <input type='submit' class='btn btn-info' value='Check' style="margin-top:-20px;height:50px; width:200px;font-size:200%;"/>
+      </div>
+    </form>
+<br>
+
+
+{#<center>	#}
+{#   <form method="POST" action="{%url 'eligibility:blacklist' %}">#}
+{#	{%csrf_token%}#}
+{#    	{% if emp and perms.eligibility.view_blacklist%}#}
+{#   <div class="cell">   #}
+{#      <input type="text" value="{{emp.emp_id}}" name="emp_id" id="emp_id" hidden>#}
+{#      <input type='submit' class="btn btn-danger" value='Click to Blacklist' style="margin-top:-20px;height:50px; width:300px;font-size:200%;"/>#}
+{#      </div>#}
+{#      {% endif %}		#}
+{#    </form>#}
+{#<br>#}
+{#<form method="POST" action="{%url 'eligibility:whitelist' %}">#}
+{#	{%csrf_token%}#}
+{#    	{% if emp and perms.eligibility.view_whitelist%}#}
+{#   <div class="cell">   #}
+{#      <input type="text" value="{{emp.emp_id}}" name="emp_id" id="emp_id" hidden>#}
+{#      <input type='submit' class="btn btn-success" value='Remove Blacklist' style="margin-top:-20px;height:50px; width:300px;font-size:200%;"/>#}
+{#      </div>#}
+{#      {% endif %}		#}
+{#    </form>#}
+{##}
+{#</center>#}
+	
+  </div>
+
+
+  
+  {% if form_issue %}
+  <div class="jumbotron">
+    <h2>You did not enter an ID.</h2>
+  </div>
+  {% elif dne%}
+    <div class="jumbotron">
+       <h2>The employee ID you entered was not found in the database.</h2>
+	</div>
+  {% elif blacklisted%}
+    <div class="jumbotron">
+       <h2>Client has been blacklisted, you cannot process a loan for this client.</h2>
+	</div> 
+ {% elif whitelisting %}
+	
+    <div class="jumbotron">
+       <h2>{{whitelisting}}</h2>
+	</div> 		
+  {% elif emp %}
+    <div class="jumbotron">
+    {% if reason %}
+      <h2>Maximum Loan Tenor: <b>0 months.</b></h2>
+      <h2>Reason: <b>{{reason}}</b></h2>
+    {%elif max_loan_tenor %}
+      <h2>Maximum Loan Tenor: <b>{{max_loan_tenor}}</b></h2>
+    {% endif %}
+	</div>
+
+  <div>
+    <table class="bordered">
+    <thead>
+    <tr>
+    	<th>Blacklisted:</th><th>{{emp.blacklisted}}</th>
+    </tr>	
+    <tr>
+        <th>Employee ID:</th> <th>{{emp.emp_id}}</th>
+    </tr>
+    </thead>
+    <tr>
+        <td>Full name:</td> <td>{{emp.full_name}}</td>
+    </tr>
+    <tr>
+        <td>Age:</td> <td>{{age}}</td>
+    </tr>
+    <tr>
+        <td>DOB:</td> <td>{{emp.dob}}</td>
+    </tr>
+    <tr>
+        <td>Assignment Status:</td> <td>{{emp.assignment_status}}</td>
+    </tr>
+    <tr>
+        <td>Gender:</td> <td>{{emp.gender}}</td>
+    </tr>
+    <tr>
+        <td>Job:</td> <td>{{emp.job}}</td>
+    </tr>
+    <tr>
+        <td>Organization:</td> <td>{{emp.organization}}</td>
+    </tr>
+    <tr>
+        <td>Hire date:</td> <td>{{emp.hire_date}}</td>
+    </tr>
+    <tr>
+        <td>Department:</td> <td>{{emp.department}}</td>
+    </tr>
+    <tr>
+        <td>Ministry:</td> <td>{{emp.ministry}}</td>
+    </tr>
+    <tr>
+        <td>SSN:</td> <td>{{emp.ssn}}</td>
+    </tr>
+    <tr>
+        <td>Bank name:</td> <td>{{emp.bank_name}}</td>
+    </tr>
+    <tr>
+        <td>Bank branch:</td> <td>{{emp.bank_branch}}</td>
+    </tr>
+    <tr>
+        <td>Location:</td> <td>{{emp.location}}</td>
+    </tr>
+    <tr>
+        <td>District:</td> <td>{{emp.district}}</td>
+    </tr>
+    <tr>
+        <td>Region:</td> <td>{{emp.region}}</td>
+    </tr>
+    <tr>
+	<td>Contact 1:</td> <td>{{emp.phoneNumber}}</td>
+    </tr>
+    <tr>
+	<td>Contact 2:</td> <td>{{emp.phoneNumber2}}</td>
+    </tr>		
+    </table>
+  </div>
+  {% endif %}
+
+{% endblock %}
